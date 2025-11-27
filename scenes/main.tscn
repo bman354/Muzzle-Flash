@@ -1,3 +1,23 @@
-[gd_scene format=3 uid="uid://bte5dh53vqe45"]
+[gd_scene load_steps=4 format=3 uid="uid://bte5dh53vqe45"]
+
+[ext_resource type="Texture2D" uid="uid://c8y7xjeto1e38" path="res://assets/monochrometiles.png" id="1_o5qli"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wfyh"]
+texture = ExtResource("1_o5qli")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sugp2"]
+sources/0 = SubResource("TileSetAtlasSource_0wfyh")
 
 [node name="Node2D" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_sugp2")
