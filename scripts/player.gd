@@ -1,16 +1,25 @@
 extends CharacterBody2D
 
 
+enum DirFacing {
+	LEFT = 1,
+	RIGHT = 0
+}
+
 const SPEED := 30.0
 const FRICTION := 0.5
+var FACING = DirFacing.RIGHT
+
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
 func _physics_process(delta):
 
 	if Input.is_action_pressed("move_right"):
+		FACING = DirFacing.RIGHT
 		velocity.x += SPEED
 	if Input.is_action_pressed("move_left"):
+		FACING = DirFacing.LEFT
 		velocity.x -= SPEED
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= SPEED
@@ -37,7 +46,8 @@ func _physics_process(delta):
 			anim.play("walk")
 		else:
 			anim.play("default")
-		
+	
+	anim.flip_h = FACING
 		
 		
 		
