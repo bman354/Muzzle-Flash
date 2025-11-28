@@ -17,18 +17,19 @@ func _physics_process(delta):
 
 	if Input.is_action_pressed("move_right"):
 		FACING = DirFacing.RIGHT
-		velocity.x += SPEED * delta
+		velocity.x += SPEED
 	if Input.is_action_pressed("move_left"):
 		FACING = DirFacing.LEFT
-		velocity.x -= SPEED * delta
+		velocity.x -= SPEED
 	if Input.is_action_pressed("move_up"):
-		velocity.y -= SPEED * delta
+		velocity.y -= SPEED
 	if Input.is_action_pressed("move_down"):
-		velocity.y += SPEED * delta
+		velocity.y += SPEED
+		
 	
 	if Input.is_action_just_pressed("player_shoot"):
 		shoot()
-		pass
+
 	
 	velocity.normalized()
 
