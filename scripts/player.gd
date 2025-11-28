@@ -6,8 +6,8 @@ enum DirFacing {
 	RIGHT = 0
 }
 
-const SPEED := 30.0
-const FRICTION := 0.5
+@export var SPEED := 30.0
+@export var FRICTION := 0.5
 var FACING = DirFacing.RIGHT
 
 
