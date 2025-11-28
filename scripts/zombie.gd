@@ -7,7 +7,8 @@ const SPEED := 30.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
-	pathfind()
+	if player != null:
+		pathfind()
 
 func _physics_process(_delta: float) -> void:
 	var dir =  to_local(nav_agent.target_position).normalized()	

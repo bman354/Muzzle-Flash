@@ -52,6 +52,8 @@ shape = SubResource("CapsuleShape2D_85g3d")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 debug_enabled = true
+debug_path_custom_point_size = 4.25
+debug_path_custom_line_width = 2.96
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
