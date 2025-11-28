@@ -1,45 +1,56 @@
-[gd_scene load_steps=7 format=3 uid="uid://ptrvlitp33vq"]
+[gd_scene load_steps=8 format=3 uid="uid://ptrvlitp33vq"]
 
 [ext_resource type="Texture2D" uid="uid://dbmyg1jn100be" path="res://assets/PlayerandZombieSheet.png" id="1_1vlb3"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jyhfs"]
-atlas = ExtResource("1_1vlb3")
-region = Rect2(0, 512, 256, 256)
+[ext_resource type="Script" uid="uid://c1sigeay2i0pj" path="res://scripts/zombie.gd" id="1_httt1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tbgi4"]
 atlas = ExtResource("1_1vlb3")
-region = Rect2(256, 512, 256, 256)
+region = Rect2(0, 512, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
 atlas = ExtResource("1_1vlb3")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
+atlas = ExtResource("1_1vlb3")
 region = Rect2(512, 512, 256, 256)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_o6xl0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_tipki"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jyhfs")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tbgi4")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tefeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6xl0")
 }],
 "loop": true,
-"name": &"walking",
+"name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tipki"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_85g3d"]
 
-[node name="Zombie" type="AnimatableBody2D"]
+[node name="zombie" type="CharacterBody2D" node_paths=PackedStringArray("player")]
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_httt1")
+player = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_o6xl0")
-animation = &"walking"
-frame = 1
-frame_progress = 0.5605916
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_tipki")
+frame = 2
+frame_progress = 0.99409735
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_tipki")
+shape = SubResource("CapsuleShape2D_85g3d")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
