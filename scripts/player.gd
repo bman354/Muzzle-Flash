@@ -8,10 +8,14 @@ enum DirFacing {
 
 @export var SPEED := 30.0
 @export var FRICTION := 0.5
+
+@export var bullet_scene: PackedScene
+
 var FACING = DirFacing.RIGHT
 
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var camera: Camera2D = $Camera2D
 
 func _physics_process(delta):
 
@@ -30,6 +34,17 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("player_shoot"):
 		shoot()
 
+	if Input.is_action_just_pressed("scroll_down"):
+		var curzoom = camera.get_zoom()
+		curzoom.x -= 0.1
+		curzoom.y -= 0.1
+		camera.set_zoom(curzoom)
+		
+	if Input.is_action_just_pressed("scroll_up"):
+		var curzoom = camera.get_zoom()
+		curzoom.x += 0.1
+		curzoom.y += 0.1
+		camera.set_zoom(curzoom)
 	
 	velocity.normalized()
 
@@ -54,6 +69,16 @@ func _physics_process(delta):
 		
 func shoot():
 	anim.play("shoot")
+	
+	if bullet_scene:
+		var bullet = bullet_scene.instantiate()
+		bullet.position = global_position
+		var mouse_dir = (get_global_mouse_position() - global_position).normalized()
+		
+		bullet.velocity = mouse_dir * bullet.SPEED
+		
+		get_parent().add_child(bullet)
+	
 	
 func _on_animated_sprite_2d_animation_finished():
 	if anim.animation == "shoot":
