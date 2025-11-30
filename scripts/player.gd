@@ -17,6 +17,10 @@ var FACING = DirFacing.RIGHT
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: Camera2D = $Camera2D
 
+
+func _ready():
+	add_to_group("player")
+
 func _physics_process(delta):
 
 	if Input.is_action_pressed("move_right"):
