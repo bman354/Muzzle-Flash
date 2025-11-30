@@ -73,15 +73,23 @@ func _physics_process(delta):
 		
 func shoot():
 	anim.play("shoot")
-	
+
 	if bullet_scene:
-		var bullet = bullet_scene.instantiate()
-		bullet.position = global_position
 		var mouse_dir = (get_global_mouse_position() - global_position).normalized()
-		
-		bullet.velocity = mouse_dir * bullet.SPEED
-		
-		get_parent().add_child(bullet)
+
+		var pellets := 5
+		var spread_degrees := 10.0 
+
+		for i in range(pellets):
+			var bullet = bullet_scene.instantiate()
+			bullet.global_position = global_position
+
+			var angle_offset = deg_to_rad(randf_range(-spread_degrees, spread_degrees))
+			var shot_dir = mouse_dir.rotated(angle_offset)
+
+			bullet.velocity = shot_dir * bullet.SPEED
+			get_parent().add_child(bullet)
+
 	
 	
 func _on_animated_sprite_2d_animation_finished():
