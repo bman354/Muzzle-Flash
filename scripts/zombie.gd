@@ -2,6 +2,11 @@ extends CharacterBody2D
 
 const SPEED := 30.0
 
+enum DirFacing {
+	LEFT = 1,
+	RIGHT = 0
+}
+var FACING = DirFacing.RIGHT
 
 
 @export var player: Node2D
@@ -22,14 +27,14 @@ func _physics_process(delta: float) -> void:
 	if (velocity.x != 0.0 and velocity.y != 0.0):
 		anim.play("walking")
 
-	var collision = move_and_collide(velocity * delta)
-	
-	if collision:
-		var obj = collision.get_collider()
-		if obj.get_groups()[0] == "bullet":
-			queue_free()
-			obj.queue_free()
-	
+	if(velocity.x > 0):
+		FACING = DirFacing.RIGHT
+	if(velocity.x < 0):
+		FACING = DirFacing.LEFT
+
+	anim.flip_h = FACING
+	move_and_collide(velocity * delta)
+		
 	
 
 func pathfind() -> void:

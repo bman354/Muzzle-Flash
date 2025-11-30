@@ -6,7 +6,9 @@ enum DirFacing {
 	RIGHT = 0
 }
 
-@export var SPEED := 30.0
+@export var max_zoom: Vector2 = Vector2(2.0,2.0)
+
+@export var SPEED := 3.0
 @export var FRICTION := 0.5
 
 @export var bullet_scene: PackedScene
@@ -19,36 +21,38 @@ var can_fire := true
 
 
 func _ready():
+	change_zoom(max_zoom.x)
 	add_to_group("player")
+	anim.play("default")
+	
 
 func _physics_process(delta):
 
+	var input_dir = Vector2.ZERO
+
 	if Input.is_action_pressed("move_right"):
 		FACING = DirFacing.RIGHT
-		velocity.x += SPEED
+		input_dir.x += 1
 	if Input.is_action_pressed("move_left"):
 		FACING = DirFacing.LEFT
-		velocity.x -= SPEED
-	if Input.is_action_pressed("move_up"):
-		velocity.y -= SPEED
+		input_dir.x -= 1
 	if Input.is_action_pressed("move_down"):
-		velocity.y += SPEED
+		input_dir.y += 1
+	if Input.is_action_pressed("move_up"):
+		input_dir.y -= 1
+
+	input_dir = input_dir.normalized()  # ensures diagonal movement isn't faster
+	velocity = input_dir * SPEED
 		
 	
 	if Input.is_action_just_pressed("player_shoot"):
 		shoot()
 
 	if Input.is_action_just_pressed("scroll_down"):
-		var curzoom = camera.get_zoom()
-		curzoom.x -= 0.1
-		curzoom.y -= 0.1
-		camera.set_zoom(curzoom)
-		
+		change_zoom(-0.1)
 	if Input.is_action_just_pressed("scroll_up"):
-		var curzoom = camera.get_zoom()
-		curzoom.x += 0.1
-		curzoom.y += 0.1
-		camera.set_zoom(curzoom)
+		change_zoom(0.1)
+
 	
 	velocity.normalized()
 
@@ -76,8 +80,9 @@ func _on_timer_timeout():
 		
 		
 func shoot():
-	anim.play("shoot")
+	
 	if bullet_scene and can_fire:
+		anim.play("shoot")
 		var mouse_dir = (get_global_mouse_position() - global_position).normalized()
 
 		var pellets := 5
@@ -99,3 +104,9 @@ func shoot():
 func _on_animated_sprite_2d_animation_finished():
 	if anim.animation == "shoot":
 		anim.play("default")
+
+func change_zoom(delta_zoom: float):
+	var curzoom = camera.zoom
+	curzoom.x = clamp(curzoom.x + delta_zoom, max_zoom.x, 10.0)
+	curzoom.y = clamp(curzoom.y + delta_zoom, max_zoom.y, 10.0)
+	camera.zoom = curzoom

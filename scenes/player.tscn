@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjmcuwej8x3vk"]
+[gd_scene load_steps=11 format=3 uid="uid://cjmcuwej8x3vk"]
 
 [ext_resource type="Script" uid="uid://dj3o3jm7gw0pp" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://bxhw0a8ktdv8g" path="res://scenes/bullet.tscn" id="2_dqkch"]
@@ -7,10 +7,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_sugp2"]
 atlas = ExtResource("2_qhqgy")
 region = Rect2(0, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jyhfs"]
-atlas = ExtResource("2_qhqgy")
-region = Rect2(0, 256, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tbgi4"]
 atlas = ExtResource("2_qhqgy")
@@ -39,9 +35,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jyhfs")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tbgi4")
 }, {
@@ -75,7 +68,6 @@ script = ExtResource("1_g2els")
 bullet_scene = ExtResource("2_dqkch")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
@@ -84,6 +76,9 @@ texture_filter = 1
 position = Vector2(-1, 0)
 scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_o5qli")
+animation = &"shoot"
+frame = 1
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
