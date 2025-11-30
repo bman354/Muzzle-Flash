@@ -12,7 +12,7 @@ enum DirFacing {
 @export var bullet_scene: PackedScene
 
 var FACING = DirFacing.RIGHT
-
+var can_fire := true
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: Camera2D = $Camera2D
@@ -69,16 +69,19 @@ func _physics_process(delta):
 	
 	anim.flip_h = FACING
 		
+	
+func _on_timer_timeout():
+	if not can_fire:
+		can_fire = true
 		
 		
 func shoot():
 	anim.play("shoot")
-
-	if bullet_scene:
+	if bullet_scene and can_fire:
 		var mouse_dir = (get_global_mouse_position() - global_position).normalized()
 
 		var pellets := 5
-		var spread_degrees := 10.0 
+		var spread_degrees := 8.0 
 
 		for i in range(pellets):
 			var bullet = bullet_scene.instantiate()
@@ -89,7 +92,8 @@ func shoot():
 
 			bullet.velocity = shot_dir * bullet.SPEED
 			get_parent().add_child(bullet)
-
+		can_fire = false
+		$FiringTimer.start()
 	
 	
 func _on_animated_sprite_2d_animation_finished():

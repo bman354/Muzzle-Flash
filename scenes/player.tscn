@@ -89,6 +89,7 @@ sprite_frames = SubResource("SpriteFrames_o5qli")
 visible = false
 shape = SubResource("CapsuleShape2D_o5qli")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="FiringTimer" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="FiringTimer" to="." method="_on_timer_timeout"]
