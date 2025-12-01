@@ -1,10 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxhw0a8ktdv8g"]
+[gd_scene load_steps=6 format=3 uid="uid://bxhw0a8ktdv8g"]
 
 [ext_resource type="Texture2D" uid="uid://dbmyg1jn100be" path="res://assets/PlayerandZombieSheet.png" id="1_mkf8s"]
 [ext_resource type="Script" uid="uid://bu51squtotijv" path="res://scripts/bullet.gd" id="1_y25gk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y25gk"]
 radius = 2.0
+
+[sub_resource type="Gradient" id="Gradient_y25gk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l5glv"]
+gradient = SubResource("Gradient_y25gk")
+fill_from = Vector2(0.3364486, 0.21028037)
+fill_to = Vector2(0.8785047, 0.17289719)
 
 [node name="Bullet" type="Area2D" groups=["bullet"]]
 collision_layer = 4
@@ -20,5 +27,8 @@ region_rect = Rect2(0, 768, 256, 256)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_y25gk")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_l5glv")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
