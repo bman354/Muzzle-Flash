@@ -6,6 +6,12 @@ enum DirFacing {
 	RIGHT = 0
 }
 
+@export var ammo_capacity := 2
+var cur_ammo := 2
+var is_reloading := false
+signal ammo_changed(amount)
+
+
 @export var max_zoom: Vector2 = Vector2(2.0,2.0)
 
 @export var SPEED := 3.0
@@ -52,7 +58,9 @@ func _physics_process(delta):
 		change_zoom(-0.1)
 	if Input.is_action_just_pressed("scroll_up"):
 		change_zoom(0.1)
-
+	if Input.is_action_just_pressed("reload"):
+		reload()
+	
 	
 	velocity.normalized()
 
@@ -81,7 +89,7 @@ func _on_timer_timeout():
 		
 func shoot():
 	
-	if bullet_scene and can_fire:
+	if bullet_scene and can_fire and cur_ammo > 0:
 		anim.play("shoot")
 		var mouse_dir = (get_global_mouse_position() - global_position).normalized()
 
@@ -102,6 +110,10 @@ func shoot():
 		
 		#Muzzle Flash
 		flash_screen()
+		cur_ammo -= 1
+		ammo_changed.emit(cur_ammo)
+		
+		
 		
 func flash_screen():
 	var playerLight = $PointLight2D
@@ -119,8 +131,24 @@ func flash_screen():
 	t.tween_property(playerLight, "texture_scale", 1.0, 1.0).set_ease(Tween.EASE_IN)
 	
 	
+func reload():
+	is_reloading = true
 	
+	await get_tree().create_timer(0.8).timeout
+	cur_ammo += 1
+	if cur_ammo > 2:
+		cur_ammo = 2
+	ammo_changed.emit(cur_ammo)
 	
+	if cur_ammo < ammo_capacity:
+		reload()
+	else:
+		is_reloading = false
+	
+
+
+
+
 func _on_animated_sprite_2d_animation_finished():
 	if anim.animation == "shoot":
 		anim.play("default")
