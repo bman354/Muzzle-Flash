@@ -99,6 +99,26 @@ func shoot():
 			get_parent().add_child(bullet)
 		can_fire = false
 		$FiringTimer.start()
+		
+		#Muzzle Flash
+		flash_screen()
+		
+func flash_screen():
+	var playerLight = $PointLight2D
+	var flash = $"../CanvasGroup/ScreenUI/MuzzleFlash"
+	
+	playerLight.texture_scale = 10.0
+	playerLight.energy = 2.0
+	
+	#flash.color = Color(1,0.8,0.4,1)
+	#flash.modulate.a = 255.0 
+	var t = create_tween()
+
+	#t.tween_property(flash, "modulate:a", 0.0, 0.2).set_ease(Tween.EASE_IN)
+	t.tween_property(playerLight, "energy", 1.0, 1.0).set_ease(Tween.EASE_IN)
+	t.tween_property(playerLight, "texture_scale", 1.0, 1.0).set_ease(Tween.EASE_IN)
+	
+	
 	
 	
 func _on_animated_sprite_2d_animation_finished():
