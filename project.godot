@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Muzzle Flash"
-run/main_scene="uid://bte5dh53vqe45"
+run/main_scene="uid://c4m1w0g8kvg4b"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 

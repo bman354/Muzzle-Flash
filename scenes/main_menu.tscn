@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4m1w0g8kvg4b"]
+
+[ext_resource type="Script" uid="uid://bodc1avqtt2ai" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6cm7"]
+font_size = 48
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_l6cm7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Container" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 10.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator" type="VBoxContainer" parent="CanvasLayer/Container"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Container/VSeparator"]
+layout_mode = 2
+text = "Muzzle Flash"
+label_settings = SubResource("LabelSettings_l6cm7")
+
+[node name="Button" type="Button" parent="CanvasLayer/Container/VSeparator"]
+layout_mode = 2
+text = "Start Game"
+
+[connection signal="pressed" from="CanvasLayer/Container/VSeparator/Button" to="." method="_on_button_pressed"]
